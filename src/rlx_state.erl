@@ -494,9 +494,10 @@ add_hook(Which, Target, Hook, State) ->
     {ok, State1} = providers:new(Hook, State),
     Providers1 = providers(State1),
     HookProvider = providers:get_provider_by_module(Hook, Providers1),
+    HookProviderName = element(2, HookProvider),
     Provider = providers:get_provider(Target, Providers1),
     Hooks = providers:hooks(Provider),
-    NewHooks = add_hook(Which, Hooks, HookProvider),
+    NewHooks = add_hook(Which, Hooks, HookProviderName),
     NewProvider = providers:hooks(Provider, NewHooks),
     {[NewProvider | lists:delete(Provider, Providers1)], State1}.
 
